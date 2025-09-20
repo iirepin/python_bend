@@ -2,8 +2,10 @@ import pygame
 import random
 import sys
 
+# Инициализация Pygame
 pygame.init()
 
+# Настройки игры
 WINDOW_WIDTH = 800
 WINDOW_HEIGHT = 600
 GRID_SIZE = 20
@@ -82,7 +84,11 @@ class Snake(GameObject):
         """Обновляет направление движения змейки."""
         if self.next_direction:
             # Запрещаем движение в противоположном направлении
-            if (self.next_direction[0] * -1, self.next_direction[1] * -1) != self.direction:
+            opposite_dir = (
+                self.next_direction[0] * -1,
+                self.next_direction[1] * -1
+            )
+            if opposite_dir != self.direction:
                 self.direction = self.next_direction
             self.next_direction = None
     
@@ -90,7 +96,10 @@ class Snake(GameObject):
         """Двигает змейку, добавляя новую голову и удаляя хвост."""
         head_x, head_y = self.positions[0]
         dx, dy = self.direction
-        new_head = ((head_x + dx) % GRID_WIDTH, (head_y + dy) % GRID_HEIGHT)
+        new_head = (
+            (head_x + dx) % GRID_WIDTH,
+            (head_y + dy) % GRID_HEIGHT
+        )
         
         self.positions.insert(0, new_head)
         if len(self.positions) > self.length:
